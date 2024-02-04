@@ -6,6 +6,7 @@ import requests
 import transcript_Test
 import app
 
+textFromApp = ""
 
 
 
@@ -20,6 +21,7 @@ def run(model, inputs):
     input = { "messages": inputs }
     response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
     return response.json()
+
 
 outputs = []
 
@@ -47,5 +49,8 @@ inputs = [
 
 final_output = run("@cf/meta/llama-2-7b-chat-int8", inputs)
 print(final_output)
+
+
+
 
 

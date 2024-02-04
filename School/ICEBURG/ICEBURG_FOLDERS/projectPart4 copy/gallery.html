@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charlotte Music</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="caroselScript.js" defer></script>
+
+
+
+    
+</head>
+<body>
+    <header>
+        <a href="index.html"><img class="logo" src="images/3135projectLogo.jpeg" alt="Charlotte Music"></a>
+        <h1>Charlotte Music</h1>
+        <h4>Dark Mode</h4>
+            <div id="darkDiv">
+                <label id="darkSwitch" class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        <nav>
+            
+            <ul>
+                <li><a id="navBurger" class="navButton" href="index.html">Home</a></li>
+                <li><a id="navBurger" class="navButton" href="artists.html">Artists</a></li>
+                <li><a id="navBurger" class="navButton" href="gallery.html">Gallery</a></li>
+                <li><a id="navBurger" class="navButton" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div id="burgerBtn" class="hamburger-btn">
+            <span class="bar"></span>
+            <span class="bar"></span>  
+            <span class="bar"></span>
+        </div>
+    </header>
+    
+        <div id="aside1" class="aside1"></div>
+        <main>
+            <div class="divSearch">
+                <form class="example" action="javascript:void(0);" style="margin:auto;max-width:300px">
+                    <input type="text" id="artistName" placeholder="Search.." name="search2">
+                    <button type="submit" id="submitBtn"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+            
+            <h2>Gallery</h2>
+
+            <div class="carousel-container">
+                <button class="carousel-btn left"><i class="fa-solid fa-chevron-left"></i></button>
+                <ul class="carousel">
+                    <li class="carousel-item active"><img src="images/download.jpeg" class="gallery-item" alt="gallery image"></li>
+                    <li class="carousel-item"><img src="images/download1.jpeg" class="gallery-item" alt="gallery image"></li>
+                    <li class="carousel-item"><img src="images/download2.jpeg" class="gallery-item" alt="gallery image"></li>
+                    <li class="carousel-item"><img src="images/download3.jpeg" class="gallery-item" alt="gallery image"></li>
+                    <li class="carousel-item"><img src="images/download.jpeg" class="gallery-item" alt="gallery image"></li>
+                    
+                </ul>
+                <button class="carousel-btn right"><i class="fa-solid fa-chevron-right"></i></button>
+                <div class="carousel-nav">
+                    <div class="nav-item active"></div>
+                    <div class="nav-item"></div>
+                    <div class="nav-item"></div>
+                    <div class="nav-item"></div>
+                    <div class="nav-item"></div>
+                </div>
+            </div>
+
+            <div class="gallery">
+            <img src="images/download.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download1.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download2.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download3.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download1.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download2.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download3.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download1.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download2.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download3.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download1.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download2.jpeg" class="gallery-item" alt="gallery image">
+            <img src="images/download3.jpeg" class="gallery-item" alt="gallery image">
+            </div>
+
+
+        </main>
+        <div id="aside2" class="aside2"></div>
+
+
+        <footer>
+            <p class="font-sm center-text">&copy;2023 Charlotte Music Scene. All rights reserved.</p>
+        </footer>
+</body>
+</html>

@@ -1,0 +1,465 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Helvetica, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #5e41c8, #FFF);
+    color: #0C3B2E;
+    display: grid;
+    grid-template-columns: 1fr 80% 1fr;
+    grid-template-rows: 6rem 1fr 3em;
+    grid-template-areas:
+        "header header header"
+        "main1 main main2"
+        "footer footer footer"; 
+}
+
+/* Logo styles */
+.logo {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+/* Header styles */
+header {
+    grid-area: header;
+    background-color: #110764;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+header.active {
+    grid-area: header;
+    background-color: #0b0546;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+/* Navigation styles */
+ul {
+    list-style-type: none;
+    display: flex;
+}
+
+li {
+    margin-right: 0px;
+    font-size: 1.2rem;
+}
+
+.navButton {
+    text-decoration: none;
+    color: green;
+    padding: 1rem;
+}
+
+.navButton:hover,
+a:hover {
+    background-color: #021913;
+}
+
+/* Hamburger button styles */
+.hamburger-btn {
+    width: 30px;
+    height: 20px;
+    position: absolute;
+    top: 2.25rem;
+    right: 1rem;
+    display: none;
+}
+
+/* Main and Aside styles */
+main, .aside1, .aside2 {
+    grid-gap: 1rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+}
+
+main {
+    grid-area: main;
+}
+
+.aside1 {
+    grid-area: main1;
+    background: linear-gradient(to bottom, #5e41c8, #FFF);
+}
+
+.aside2 {
+    grid-area: main2;
+    background: linear-gradient(to bottom, #5e41c8, #FFF);
+}
+
+/* Active state styles for main and aside */
+main.active {
+    background-color: #000000;
+    color: #FFF;
+}
+
+.aside1.active {
+    background: linear-gradient(to bottom, #37286e, #191137);
+}
+
+.aside2.active {
+    background: linear-gradient(to bottom, #37286e, #191137);
+}
+
+/* Footer styles */
+footer, footer.active {
+    background-color: #110764;
+    color: white;
+    grid-area: footer;
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    writing-mode: horizontal-tb;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container styles */
+.container-img {
+    display: flex;
+    flex-basis: 300px;
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+img {
+    display: flex;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Paragraph, Heading styles */
+p, h2 {
+    display: flex;
+    justify-content: center;
+}
+
+/* Additional content container styles */
+.container-content {
+    padding: .5rem;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px 0px rgba(17,12,46,0.8);
+    max-width: 500px;
+    flex-grow: 1;
+}
+
+/* Contact form styles */
+.pcontact, .formcontact {
+    display: flex;
+    width: 100%;
+    padding-top: 16px;
+    padding-left: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* Gallery styles */
+.gallery-item {
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: space-evenly;
+    margin: 24px;
+}
+
+.gallery {
+    justify-content: space-evenly;
+    align-items: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+/* Artist button styles */
+.artistButton {
+    text-decoration: none;
+    padding: 1rem;
+}
+
+/* Carousel styles */
+.carousel-container {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.carousel {
+    list-style-type: none;
+    width: 100%;
+    height: 600px;
+    position: relative;
+    right: 22px;
+}
+
+.carousel-item {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-item > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; 
+}
+
+.carousel-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #046A38;
+    position: absolute;
+    top: 50%;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+.carousel-btn.left {
+    left: -2.5rem;
+}
+
+.carousel-btn.right {
+    right: -2.5rem;
+}
+
+.carousel-btn:hover {
+    cursor: pointer;
+    background-color: #046A38;
+    color: white;
+}
+
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    height: 11px;
+    width: 11px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.nav-item.active {
+    opacity: 0.8;
+}
+
+/* Dark mode slider */
+h4 {
+    display: block;
+    position: absolute;
+    right: 358px;
+    top:15px;
+}
+
+.switch {
+    display: block;
+    position: absolute;
+    width: 60px;
+    height: 34px;
+    top: 35px;
+    right:365px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 700px){
+
+    .hamburger-btn{
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    header{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    ul{
+        display:none;
+    }
+
+    ul.active{
+        display:flex;
+        flex-direction: column;
+    }
+   
+
+    #navBurger {
+        width: 100%;
+        display: block;
+    }
+
+    li{
+        text-align: center;
+    }
+    body.active{
+        font-family: Helvetica, sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #5e41c8, #FFF);
+        color: #0C3B2E;
+        display: grid;
+        grid-template-columns: 1fr 80% 1fr;
+        grid-template-rows: 20rem 1fr 3em;
+        grid-template-areas:
+            "header header header"
+            "main1 main main2"
+            "footer footer footer";
+    }
+    .switch {
+        display: block;
+        position: absolute;
+        width: 60px;
+        height: 34px;
+        top: 35px;
+        right:80px;
+      }
+
+    h4 {
+        display: block;
+        position: absolute;
+        right: 80px;
+        top:15px;
+    }
+
+    .carousel-container { 
+        display:none;
+    
+    }
+    
+    .carousel {
+        display:none;
+    }
+    
+    .carousel-item {
+        display:none;
+    }
+    
+    .carousel-item.active {
+        display:none;
+    }
+    
+    .carousel-item > img { /* select child of carousel-item*/
+        display:none;  
+    }
+    
+    .carousel-btn {
+        display:none;
+    }
+    
+    .carousel-btn.left {
+        display:none;
+    }
+    
+    .carousel-btn.right {
+        display:none;    
+    }
+    
+    .carousel-btn:hover{ 
+        display:none;
+    }
+    
+    .carousel-nav {
+        display:none;
+    }
+    .logo {
+        width: 75px;
+        height: 75px;
+        display: flex;
+        position: absolute;  
+        left: 0px;
+        top:10.5px;
+    }
+}
