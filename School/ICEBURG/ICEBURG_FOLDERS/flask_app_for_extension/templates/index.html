@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textElement = document.getElementById('textDisplay'); // Ensure you have this element in your HTML
+            let lastText = "";
+        
+            function fetchText() {
+                fetch('/get_text')
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.text !== lastText) {
+                            lastText = data.text;
+                            textElement.textContent = lastText; // Update the display
+                        }
+                    })
+                    .catch(error => console.error('Error fetching text:', error));
+            }
+        
+            // Poll every 5 seconds
+            setInterval(fetchText, 1000);
+        });
+        </script>
+</head>
+<body>
+    <h1>welcome</h1>
+    <p id="textDisplay">{{ text }}</p> 
+</body>
+</html>
