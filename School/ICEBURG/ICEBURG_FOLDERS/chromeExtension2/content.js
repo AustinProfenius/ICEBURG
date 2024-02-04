@@ -47,6 +47,41 @@
 
 
 
+
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "sendSnipText") {
+      // Extract text here
+      const extractedText = document.body.innerText; // Simple example of text extraction
+      sendResponse({extractedText: extractedText});
+      // Send the extracted text to your Flask app
+      fetch('http://127.0.0.1:5000/receive_text_snip_text', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({text: extractedText}),
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+          // Use sendResponse to send success back to the sender, if needed
+          sendResponse({success: true, data: data});
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+          sendResponse({success: false, error: error.toString()});
+      });
+
+      // Must return true to indicate you're sending a response asynchronously
+      return true;
+  }
+  // Optionally, handle other actions here
+});
+
+
+
+
 // In content.js or other scripts intended to receive messages
 /*chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 

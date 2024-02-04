@@ -5,47 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
     <title>Screen Capture</title>
-    <script type="text/javascript" charset="utf-8">
-       /* document.addEventListener('DOMContentLoaded', function() {
-            const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-            const textElement = document.getElementById('textDisplay');
-
-            socket.on('connect', () => {
-                console.log('WebSocket Connected');
-            });
-
-            socket.on('text_update', data => {
-                textElement.textContent = data.text; // Update the display with new text
-            });
-        });*/
-    </script>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        var socket = io();  // Connect to the WebSocket server
-    
-        socket.on('text_update', function(data) {
-            // Update text display when a new message is received
-            document.getElementById('textDisplay').textContent = data.text;
+        /*document.addEventListener('DOMContentLoaded', function() {
+            var socket = io();  // Connect to the WebSocket server
+        
+            socket.on('text_update', function(data) {
+                // Assuming data.text is a list of strings
+                const mainContainer = document.getElementById('main-container'); // This should be the ID of the main container where you want to add the divs
+                mainContainer.innerHTML = ''; // Clear existing content
+                data.text.forEach(function(point) {
+                    const div = document.createElement('div');
+                    div.className = "container-content";
+                    div.classList.add('container-content'); // Add the class to each new div
+        
+                    const p = document.createElement('p');
+                    p.textContent = point;
+                    div.appendChild(p);
+
+                    div.addEventListener('click', function() {
+                        fetch('http://127.0.0.1:5000/card_clicked', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({text: point}),
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log('Success:', data))
+                        .catch(error => console.error('Error:', error));
+                    });
+        
+                    mainContainer.appendChild(div);
+                });
+            });
+        });*/
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var socket = io('http://127.0.0.1:5000');  // Connect to the WebSocket server
+
+            var isFirstEventHandlerExecuted = false; 
+
+            socket.on('text_update', function(data) {
+                if (!isFirstEventHandlerExecuted) {
+                    const mainContainer = document.getElementById('main-container');
+                    mainContainer.innerHTML = ''; 
+
+                    data.text.forEach(function(point) {
+                        const div = document.createElement('div');
+                        div.classList.add('container-content');
+                        const p = document.createElement('p');
+                        p.textContent = point;
+                        div.appendChild(p);
+
+                        // Emit an event when a card is clicked
+                        div.addEventListener('click', function() {
+                            socket.emit('card_clicked_index', {text: p.textContent});
+                        });
+
+                        mainContainer.appendChild(div);
+                    });
+                    isFirstEventHandlerExecuted = true;  
+                }
+            });
+            socket.on('text_update_2', function(data) {
+                const mainContainer2 = document.getElementById('main-container2');
+                
+
+                
+                    const div = document.createElement('div');
+                    div.classList.add('container-content');
+                    const p2 = document.createElement('p');
+                    p2.textContent = data.text;
+                    console.log(data.text)
+                    div.appendChild(p2);
+
+                    // Emit an event when a card is clicked
+                    
+
+                    mainContainer2.appendChild(div);
+                
+            });
         });
-    });
+
+  
     </script>
+        
 
-    <div class="divider"></div>
 
-    <main>
-        <h2>Quick notes</h2>
-        <div class="divider"></div>
-    <p class="move"> 
-        <ol class="list">
-            <li class="framing"> test1: thi sis</li>
-            <li class="framing">Test2</li>
-        </ol>
-    </p>
-    </main>
 </head>
 <body>
-    <h1>welcome</h1>
+    <div class="container">
+        <header>
+        <h1>Screen Capture</h1>
+        <h2>This is a summary of the article you have provided.</h2>
+        </header>
+        <div class="divider"></div>
+    
+        <main>
+            <h2>Here are the key points. Click for more info!</h2>
+
+            
+            <div class="container-content-main" id="main-container">
+                
+            </div>
+            <div class="container-content-main" id="main-container2">
+
+            </div>
+            
+        </main>
+    </div>
     <p id="textDisplay">{{ text }}</p> 
 </body>
 </html>

@@ -3,8 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default1.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
     <title>Youtube Wizard</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script type="text/javascript">
+
+        
+
+
+       /* document.addEventListener('DOMContentLoaded', function() {
+            var socket = io('http://127.0.0.1:5000/youtubeWizard');  // Connect to the WebSocket server
+        
+            socket.on('text_update_youtube', function(data) {
+                // Assuming data.text is a list of strings
+                const mainContainer = document.getElementById('main-container'); // This should be the ID of the main container where you want to add the divs
+                mainContainer.innerHTML = ''; // Clear existing content
+                data.text.forEach(function(point) {
+                    const div = document.createElement('div');
+                    div.className = "container-content";
+                    div.classList.add('container-content'); // Add the class to each new div
+        
+                    const p = document.createElement('p');
+                    p.textContent = point;
+                    div.appendChild(p);
+        
+                    mainContainer.appendChild(div);
+                });
+            });
+        });*/
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var socket = io('http://127.0.0.1:5000');  // Connect to the WebSocket server
+
+            socket.on('text_update_youtube', function(data) {
+                const mainContainer = document.getElementById('main-container');
+                mainContainer.innerHTML = ''; 
+
+                data.text.forEach(function(point) {
+                    const div = document.createElement('div');
+                    div.classList.add('container-content');
+                    const p = document.createElement('p');
+                    p.textContent = point;
+                    div.appendChild(p);
+
+                    // Emit an event when a card is clicked
+                    div.addEventListener('click', function() {
+                        socket.emit('card_clicked_youtube', {text: p.textContent});
+                    });
+
+                    mainContainer.appendChild(div);
+                });
+            });
+        });
+        </script>
 </head>
 <body>
     <div class="container">
@@ -15,8 +66,10 @@
     <div class="divider"></div>
 
     <main>
-        <h2>Quick notes</h2>
-    <p>output aka call script that gets data </p>
+        <h2>Here are the key points. Click for more info!</h2>
+        <div class="container-content-main" id="main-container">
+                
+        </div>
     </main>
 </div>
 </body>
