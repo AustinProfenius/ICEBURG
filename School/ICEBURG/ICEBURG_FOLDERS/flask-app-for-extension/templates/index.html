@@ -3,28 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const textElement = document.getElementById('textDisplay'); // Ensure you have this element in your HTML
-            let lastText = "";
-        
-            function fetchText() {
-                fetch('/get_text')
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.text !== lastText) {
-                            lastText = data.text;
-                            textElement.textContent = lastText; // Update the display
-                        }
-                    })
-                    .catch(error => console.error('Error fetching text:', error));
-            }
-        
-            // Poll every 1 seconds
-            setInterval(fetchText, 1000);
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+    <title>Screen Capture</title>
+    <script type="text/javascript" charset="utf-8">
+       /* document.addEventListener('DOMContentLoaded', function() {
+            const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+            const textElement = document.getElementById('textDisplay');
+
+            socket.on('connect', () => {
+                console.log('WebSocket Connected');
+            });
+
+            socket.on('text_update', data => {
+                textElement.textContent = data.text; // Update the display with new text
+            });
+        });*/
+    </script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var socket = io();  // Connect to the WebSocket server
+    
+        socket.on('text_update', function(data) {
+            // Update text display when a new message is received
+            document.getElementById('textDisplay').textContent = data.text;
         });
-        </script>
+    });
+    </script>
+
+    <div class="divider"></div>
+
+    <main>
+        <h2>Quick notes</h2>
+        <div class="divider"></div>
+    <p class="move"> 
+        <ol class="list">
+            <li class="framing"> test1: thi sis</li>
+            <li class="framing">Test2</li>
+        </ol>
+    </p>
+    </main>
 </head>
 <body>
     <h1>welcome</h1>

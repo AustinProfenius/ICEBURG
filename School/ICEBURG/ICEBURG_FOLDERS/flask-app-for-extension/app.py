@@ -1,90 +1,85 @@
 from flask import Flask, request, jsonify, render_template
+from flask_socketio import SocketIO, emit
 from flask_cors import CORS
-
-from doctest import OutputChecker
-import textwrap
-from youtube_transcript_api import YouTubeTranscriptApi
 import requests
+import textwrap
 import time
-
-
-
-textFromApp = ""
-
-
-
-api_key = "AIzaSyAZCYEesMFWF7qwbXZz_AI22zKoxMYzx_E" 
 
 API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/158e2c5ca1cb98881c848241a12f8801/ai/run/"
 headers = {"Authorization": "Bearer RWG-19eYHl7tWsHDSPCk7P1j65zHHH5c8yMXKDXm"}
+persona = "You are a Learning assistant built to do precisely one thing. Your task is to take the incoming text and break it down in to key points. Your only response to my prompt should be an ordered list of the most relevent and most important topics. aside from this ordered list there should be no other text output"
 
-persona = "You are a Learning assistant and educator designed to facilitate a comprehensive and interactive learning experience. you serve as a digital tutor, provide educational support and resources to users across a wide range of subjects. when given a prompt you should summeraize the data in into a collection of main points."
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'  # It's important for SocketIO
+socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app)
 
-# Global variable to store the text
-global_text = ""
-getTextFromPageSummary = None
-
-@app.route('/receive_text', methods=['POST'])
-def receive_text():
-    global global_text  # Declare to modify the global variable
-    if request.is_json:
-        data = request.get_json()
-        global_text = data.get('text', '')  # Update global variable with received text
-        return jsonify({"message": "Text received successfully!","text":global_text}), 200
-    else:
-        return jsonify({"error": "Request must be JSON"}), 400
+global_text = ""  # Global variable to store the text
 
 @app.route('/')
 def home():
-    return render_template('index.html', text=global_text)
+    return render_template('index.html')
 
-@app.route('/get_text')
-def get_text():
+@app.route('/snippetMode')
+def snippet():
+    return render_template('snippetMode.html')
+
+@app.route('/youtubeWizard')
+def youtubeWizard():
+    return render_template('youtubeWizard.html')
+
+@app.route('/receive_text', methods=['POST'])
+def receive_text():
     global global_text
-    renderedText = getPageSummary(global_text)
-    time.sleep(2)
-    return jsonify({"text": renderedText})
+    if request.is_json:
+        data = request.get_json()
+        global_text = data.get('text', '')
+        processed_text = myAIdef(global_text)  # Process text with AI before broadcasting
+        #time.sleep(2)  # Consider async handling instead of sleep
+        
+        return jsonify({"message": "Text processed and broadcasted successfully!", "text": processed_text}), 200
+    else:
+        return jsonify({"error": "Request must be JSON"}), 400
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)
 
+# Define the run function outside myAIdef to make it reusable
+def run(model, inputs, headers):
+    input_data = {"messages": inputs}
+    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input_data)
+    return response.json()
 
-def getPageSummary(global_text):
-    #This function reads a message from stdin and decodes it.
-
-
-    outputs = []
-
-    #make a method that recieves a google chrome native message and assigns the message to transcript
-    transcript = global_text
-    transcript_parts = textwrap.wrap(transcript, 4096)
-
-    for part in transcript_parts:
-        # Use the transcript as the user's message in the inputs for the run function
-        inputs = [
-            { "role": "system", "content":  persona},
-            { "role": "user", "content": part}
-        ]
-
-    def run(model, inputs):
-        input = { "messages": inputs }
-        response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
-        return response.json()
-    
-    output = run("@cf/meta/llama-2-7b-chat-int8", inputs)
-    outputs.append(output['result']['response'])  # append the response to the outputs list
-
-    outputs_str = ' '.join(outputs)
-
+def myAIdef(text_to_process):
+ 
+    # Process the text with AI
     inputs = [
-        { "role": "system", "content": "You are a Learning assistant and educator. When given a list of points, you should identify and return the 10 most important points. Make sure you cover a wide array of points and not to focus only on one aspect." },
-        { "role": "user", "content": outputs_str}
+        {"role": "system", "content": persona},
+        {"role": "user", "content": text_to_process}
     ]
 
-    final_output = run("@cf/meta/llama-2-7b-chat-int8", inputs)
-    return final_output
+    # Call the AI model
+    output = run("@cf/meta/llama-2-7b-chat-int8", inputs, headers)
+    
+    # Assuming the AI response structure is correctly accessed
+    try:
+        ai_response = output['result']['response']
+    except KeyError:
+        ai_response = "Failed to process text."
 
+    print(text_to_process)
 
+    print(ai_response)  # For debugging
+    print(type(ai_response))
+    socketio.emit('text_update', {'text': ai_response}, broadcast=True)
+
+    return ai_response

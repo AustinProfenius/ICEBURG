@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +15,8 @@
     </header>
    
     <main>
-      <button id="extractText">Screen Grab </button>
-      <button id="screenCapture">Screen Capture</button>
+      <button id="extractText">Screen Capture</button>
+      <button id="snippetMode">Snippet Mode</button>
       
       <div class="divider"></div>
       
@@ -24,11 +26,5 @@
     </main>
   </div>
   <script src="popup.js"></script>
-  <script>
-  const ws = new WebSocket("ws//localhost:3000")
-    ws.addEventListener("open", () =>{
-      console.log("connected");
-    });
-    </script>
 </body>
 </html>
