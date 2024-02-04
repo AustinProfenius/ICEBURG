@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
+import pageSummary
 
 app = Flask(__name__)
 CORS(app)
@@ -24,7 +25,18 @@ def home():
 @app.route('/get_text')
 def get_text():
     global global_text
+    sendTextToApp(global_text)
+    getTextFromPageSummary()
     return jsonify({"text": global_text})
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+def sendTextToApp(global_text):
+    pageSummary.textFromApp = global_text
+
+def getTextFromPageSummary():
+    global global_text
+    global_text = pageSummary.final_output
+
+    

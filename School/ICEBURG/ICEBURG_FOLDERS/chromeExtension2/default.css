@@ -1,0 +1,85 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #F5F5F5, #E8E8E8);
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #2C3E50;
+  border: 1px solid #BDC3C7;
+  text-align: center;
+  border-radius: 15px;
+}
+
+h1 {
+  color: #ECF0F1;
+}
+
+.divider {
+  height: 1px;
+  background-color: #BDC3C7;
+  margin: 10px 0;
+}
+
+main {
+  background-color: #34495E;
+  margin: 1px 0;
+  text-align: center;
+  border-radius: 15px;
+}
+h2{
+  font-size: medium;
+  color: #E8E8E8;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+p{
+  background-color: #34495E;
+  margin: 1px 0;
+  text-align: left;
+  border-radius: 15px;
+  color:#E8E8E8;
+  padding-left:10px;
+  padding-top:10px;
+  padding-bottom:10px
+  
+}
+
+button {
+  background-color: #3498DB;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 90%;
+  height: 50px;
+  border-radius: 5px;
+}
+
+input[type=text] {
+  width: 90%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #BDC3C7;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  border-radius: 15px;
+}
+
+input[type=text]:focus {
+  border: 3px solid #7F8C8D;
+}
